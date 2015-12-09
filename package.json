@@ -1,0 +1,30 @@
+{
+  "name": "km-js",
+  "version": "1.0.0",
+  "description": "tool functions",
+  "main": "km-tool.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kmCha/KM-tool.git"
+  },
+  "keywords": [
+    "tool"
+  ],
+  "author": "kMchA",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kmCha/KM-tool/issues"
+  },
+  "homepage": "https://github.com/kmCha/KM-tool#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  },
+  "dependencies": {
+    "del": "^2.2.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^1.5.1"
+  }
+}
