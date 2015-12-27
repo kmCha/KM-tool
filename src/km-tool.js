@@ -15,6 +15,26 @@ var KM = function(){		//返回全局对象
 			return Object.prototype.toString.call(fn) === "[object Function]";
 		},
 
+		contains: function(refNode, otherNode) {					//KM.contains(ref, other), 跨浏览器判断refNode是否包含otherNode
+			if(typeof refNode.contains === "function") {   // 支持contains()方法
+				return refNode.contains(otherNode);
+			}
+			else if (typeof refNode.compareDocumentPosition === "function") {   // 支持compareDocumentPosition()方法
+				return !!(refNode.compareDocumentPosition(otherNode) & 16); // 按位与 位掩码
+			}
+			else {										// 都不支持，递归遍历父节点
+				var node = otherNode.parentNode;
+				do {
+					if(node === refNode) {
+						return true;
+					}
+					else{
+						node = node.parentNode;
+					}
+				} while(node !== null);
+			}
+		},
+
 		EventUtil:    //通用事件方法对象  KM.EventUtil
 		{
 			fixEvent: function(event) {									//event = KM.EventUtil.fixEvent(e)，用于创建浏览器通用event对象，并附上各种属性方法
@@ -183,15 +203,15 @@ var KM = function(){		//返回全局对象
 			expando = "data-" + (new Date()).getTime();   //私有变量，为每个元素的自定义特性分配名字（根据创建的时间）
 
 	inKM.getData = function(element) {		//KM.getData(elem)，公有方法，读取传入元素的信息
-		var guid = element[expando];				//设置guid为元素对应expando特性的值（如果存在的话）
-		if(!guid){													//如果guid不存在，即元素中没有expando特性
+		var guid = element[expando];				//设置guid为元素对应expando属性的值（如果存在的话）
+		if(!guid){													//如果guid不存在，即元素中没有expando属性
 			guid = element[expando] = guidCounter++;
 			cache[guid] = {};									//初始化缓存中对应元素guid的信息对象
 		}
 		return cache[guid];
 	};
 
-	inKM.removeData = function(element) {   //KM.removeData(elem)，公有方法，清除元素的绑定信息和存放guid的expando特性
+	inKM.removeData = function(element) {   //KM.removeData(elem)，公有方法，清除元素的绑定信息和存放guid的expando属性
 		var guid = element[expando];
 		if(!guid) {														//传入的元素本来就没绑定过信息，没有guid
 			return;

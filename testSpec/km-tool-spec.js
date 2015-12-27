@@ -74,8 +74,8 @@ describe("KM.removeData(element) method", function() {
 // KM.isFunction()
 describe("KM.isFunction(fn) method", function(){
 	it("return ture if the input is a function no matter on what browser", function(){
-		var func = function(){};
-		expect(KM.isFunction(func)).toBe(true);
+		var fn = function(){};
+		expect(KM.isFunction(fn)).toBe(true);
 	});
 });
 
@@ -159,5 +159,15 @@ describe("KM.EventUtil.triggerEvent(element, event) method", function(){
 
 		KM.EventUtil.triggerEvent(domElem, type);
 		expect(listener2).toHaveBeenCalled();
+	});
+});
+
+// KM.contains()
+describe("KM.contains(refNode, otherNode) method", function(){
+	it("return ture if refNode contains otherNode", function(){
+		var ref = document.createElement("div");
+		var other = document.createElement("div");
+		ref.appendChild(other);
+		expect(KM.contains(ref, other)).toBe(true);
 	});
 });
